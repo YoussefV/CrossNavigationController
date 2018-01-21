@@ -48,7 +48,7 @@ class SectionScrollView: UIScrollView {
         var lastLabel : HeaderLabel? = nil
         for i in 0..<pageCount {
             let label = HeaderLabel()
-            label.text = HeaderView.pages[rowNumber][i]
+            label.text = HeaderView.pages[rowNumber][i].pageTitle
             self.contentView.addSubview(label)
             
             NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self.contentView, attribute: .top, multiplier: 1.0, constant: 0).isActive = true
