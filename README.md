@@ -3,9 +3,11 @@ A navigation controller that can switch between view controllers horizontally an
 
 # TODO:
 
--[x] Setup `HeaderView`
--[x] Detect `HeaderView` scrolling direction and send that off to the `HeaderViewScrollDelegate`
--[ ] Implement the transitioning logic at the bottom of the `HeaderView` file (conforming to `HeaderViewScrollDelegate`)
+- [x] Setup `HeaderView`
+
+- [x] Detect `HeaderView` scrolling direction and send that off to the `HeaderViewScrollDelegate`
+
+- [ ] Implement the transitioning logic at the bottom of the `HeaderView` file (conforming to `HeaderViewScrollDelegate`)
 
 # The file structure:
 The file structure is a lot, but easy to understand.
