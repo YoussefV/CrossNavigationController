@@ -6,26 +6,61 @@
 //  Copyright © 2017 Youssef Victor. All rights reserved.
 //
 
+import InteractiveTransitioningContainer
 import UIKit
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var headerContainerView: UIView!
     
+    @IBOutlet weak var ownContainerView: UIView!
+    
+    weak var headerView: HeaderView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let headerView = HeaderView(frame: CGRect.zero)
+        headerView = HeaderView(frame: CGRect.zero)
         self.headerContainerView.addSubview(headerView)
         headerView.fillSuperview()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    open override func loadView() {
+        super.loadView()
     }
-
 }
 
+class InteractiveContainerViewController: InteractiveTransitioningContainer {
+    
+    let headerView: HeaderView = HeaderView(frame: CGRect.zero)
+    
+    open override func loadView() {
+        super.loadView()
+        
+        self.containerView = UIView()
+        self.view.addSubview(containerView)
+        
+        containerDelegate = headerView
+        
+        headerView.container = self
+        self.view.addSubview(headerView)
+        headerView.backgroundColor = .white
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            headerView.heightAnchor.constraint(equalToConstant: 90),
+            headerView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            
+            containerView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            containerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            containerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            ])
+    }
+}
 
 extension UIView {
     func fillSuperview() {

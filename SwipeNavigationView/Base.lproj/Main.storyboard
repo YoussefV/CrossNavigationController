@@ -25,17 +25,26 @@
                                     <constraint firstAttribute="height" constant="90" id="GEs-gt-1Xb"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYy-du-kLX">
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qYy-du-kLX" secondAttribute="bottom" id="2tK-CX-N3Z"/>
                             <constraint firstItem="EOK-Zm-Luo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2uS-cO-4a6"/>
                             <constraint firstItem="EOK-Zm-Luo" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9In-Jl-EeD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qYy-du-kLX" secondAttribute="trailing" id="Dec-oP-B8K"/>
                             <constraint firstItem="EOK-Zm-Luo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="Lu2-k3-jVz"/>
+                            <constraint firstItem="qYy-du-kLX" firstAttribute="top" secondItem="EOK-Zm-Luo" secondAttribute="bottom" id="bfs-yb-Zan"/>
+                            <constraint firstItem="qYy-du-kLX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qhS-ju-tml"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="headerContainerView" destination="EOK-Zm-Luo" id="ldB-Qd-TeM"/>
+                        <outlet property="ownContainerView" destination="qYy-du-kLX" id="t9G-ra-w2j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import InteractiveTransitioningContainer
 
 class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -17,10 +18,23 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     private let highlighterHeight : CGFloat  = 10.0
     private var bottomConstraint             = NSLayoutConstraint()
     
-    // Page Labels
-    static let pages = [["Sect0-Page0", "Sect0-Page1", "Sect0-Page2", "Sect2Page3"],
-                        ["Sect1-Page0", "Sect1-Page1", "Sect1-Page2"],
-                        ["Sect2-Page0", "Sect2-Page1", "Sect2-Page2", "Sect2-Page3"]]
+    
+    
+    // Pages
+    static let pages = [[PageController(title: "Sect0-Page0", color: .red), PageController(title: "Sect0-Page1", color: .green), PageController(title: "Sect0-Page2", color: .blue)],
+                        [PageController(title: "Sect1-Page0", color: .cyan), PageController(title: "Sect1-Page1", color: .yellow)]]
+                        
+    
+    // MARK: Delegate fields
+    fileprivate var animator: UIViewControllerAnimatedTransitioning!
+    
+    var fromSection: Int = 0
+    var fromRow: Int = 0
+    
+    var toSection: Int = 0
+    var toRow: Int = 0
+    
+    weak var container: InteractiveContainerViewController?
     
     // MARK: Scrolling Variables
     // This is not the cleanest way to do it,
@@ -29,7 +43,7 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     // axis. This is so I can control the transitions and have
     // each section's pages be unique
     private var currSection = 0
-    private var lastPage    = [0, 0, 0]
+    private var lastPage    = [0, 0]
     
     var headerOffset : CGPoint {
         return self.contentOffset
@@ -40,6 +54,8 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = 0
+        
+        self.animator = SwipeToSlideTransitionAnimation()
         
         super.init(frame: frame, collectionViewLayout: flowLayout)
         
@@ -104,10 +120,23 @@ extension HeaderView : HeaderViewScrollDelegate {
         
         
         if (vertically) {
+            // this does animated non-interactive transition
+            fromSection = currSection
+            toSection = newSection
+            fromRow = lastPage[fromSection]
+            toRow = lastPage[toSection]
+            container?.transition(to: HeaderView.pages[toSection][toRow], animated: true, interactive: false)
+            
             // Do ViewController transition stuff (vertically)
             self.transitionVertically(fromSection: currSection, toSection: newSection)
             self.currSection = newSection
         } else {
+            fromSection = currSection
+            toSection = currSection
+            fromRow = lastPage[fromSection]
+            toRow = newPage
+            container?.transition(to: HeaderView.pages[toSection][toRow], animated: true, interactive: false)
+            
              // Do ViewController transition stuff (horizontally)
             self.transitionHorizontally(fromPage: lastPage[currSection], toPage: newPage)
             self.lastPage[currSection] = newPage
@@ -131,4 +160,105 @@ extension HeaderView : HeaderViewScrollDelegate {
             to   Sect\(currSection)-Page\(toPage)\n
             """)
     }
+}
+
+
+extension HeaderView: InteractiveTransitioningContainerDelegate {
+    
+    // MARK: InteractiveTransitioningContainerDelegate
+    
+    public func initialViewController(_ interactiveTransitioningContainer: InteractiveTransitioningContainer) -> UIViewController {
+        return HeaderView.pages[0][0]
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        animationControllerForTransitionFrom fromViewController: UIViewController,
+        to toViewController: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        return animator
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        animationPositionsForTransitionFrom fromViewController: UIViewController,
+        to toViewController: UIViewController) -> InteractiveTransitioningContainerAnimationPositions {
+        
+        // normally we would use fromViewController and toViewController to determine section and row, here I keep it in properties
+        
+        let vertical = fromSection != toSection
+        
+        if vertical {
+            
+            let goingDown = fromSection < toSection
+            
+            let travelDistance = goingDown ? -interactiveTransitioningContainer.containerView.bounds.size.height : interactiveTransitioningContainer.containerView.bounds.size.height
+            
+            let fromInitialFrame = interactiveTransitioningContainer.containerView.bounds
+            let toFinalFrame = interactiveTransitioningContainer.containerView.bounds
+            let fromFinalFrame = interactiveTransitioningContainer.containerView.bounds.offsetBy(dx: 0, dy: travelDistance)
+            let toInitialFrame = interactiveTransitioningContainer.containerView.bounds.offsetBy(dx: 0, dy: -travelDistance)
+            
+            return InteractiveTransitioningContainerAnimationPositionsImpl(fromInitialFrame: fromInitialFrame, fromFinalFrame: fromFinalFrame, toInitialFrame: toInitialFrame, toFinalFrame: toFinalFrame)
+            
+        } else {
+            
+            let goingRight = fromRow < toRow
+            
+            let travelDistance = goingRight ? -interactiveTransitioningContainer.containerView.bounds.size.width : interactiveTransitioningContainer.containerView.bounds.size.width
+            
+            let fromInitialFrame = interactiveTransitioningContainer.containerView.bounds
+            let toFinalFrame = interactiveTransitioningContainer.containerView.bounds
+            let fromFinalFrame = interactiveTransitioningContainer.containerView.bounds.offsetBy(dx: travelDistance, dy: 0)
+            let toInitialFrame = interactiveTransitioningContainer.containerView.bounds.offsetBy(dx: -travelDistance, dy: 0)
+            
+            return InteractiveTransitioningContainerAnimationPositionsImpl(fromInitialFrame: fromInitialFrame, fromFinalFrame: fromFinalFrame, toInitialFrame: toInitialFrame, toFinalFrame: toFinalFrame)
+        }
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        
+        // TODO: this HeaderView would become interaction controller
+        // for interactive transitions you need to implement interaction controller
+        // see for inspiration https://github.com/MilanNosal/InteractiveTransitioningContainer/blob/master/InteractiveTransitioningContainer/SwipeToSlidePanGestureInteractiveTransition.swift
+        // the problem here is that I use pan gesture, but you want the transitions be controller by
+        // scrolling of the collectionView - you have to watch scrolling and use
+        // controller.updateInteractiveTransition(percentComplete: progress)
+        // and controller.finishInteractiveTransition() / controller.immediateFinishInteractiveTransition()
+        // and controller.cancelInteractiveTransition() / controller.cancelFinishInteractiveTransition()
+        // to react to scrolling
+        
+        // P.S.: you start a new transition (after finishing/cancelling the previous one) by calling transition(to: newPage, interactive: true) called on the interactiveContainer, and then you control it by using aforementioned methods
+        return nil
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        willTransitionFrom fromViewController: UIViewController,
+        to toViewController: UIViewController,
+        coordinatedBy transitionCoordinator: UIViewControllerTransitionCoordinator) {
+        
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        transitionFinishedTo viewController: UIViewController,
+        wasCancelled: Bool) {
+        
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        layoutIfNotAlready viewController: UIViewController, inContainerView containerView: UIView) {
+        viewController.view.frame = containerView.bounds
+    }
+    
+    public func interactiveTransitioningContainer(
+        _ interactiveTransitioningContainer: InteractiveTransitioningContainer,
+        releaseLayoutOf viewController: UIViewController, inContainerView containerView: UIView) {
+        
+    }
+    
 }
