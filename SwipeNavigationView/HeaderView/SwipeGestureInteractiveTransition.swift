@@ -1,14 +1,16 @@
 //
 //  SwipeToSlidePanGestureInteractiveTransition.swift
-//  InteractiveTransitioningContainer
+//  SwipeNavigationView
 //
-//  Created by Milan Nosáľ on 22/01/2017.
-//  Copyright © 2017 Svagant. All rights reserved.
+//  Created by Youssef Victor on 22/01/2018.
+//  Copyright © 2017 Youssef Victor All rights reserved.
 //
+
 
 import Foundation
+import UIKit
 
-public class SwipeToSlidePanGestureInteractiveTransition: InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition {
+class SwipeGestureInteractiveTransition: InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition {
     
     private let progressNeeded: CGFloat
     
@@ -16,7 +18,7 @@ public class SwipeToSlidePanGestureInteractiveTransition: InteractiveTransitionC
     
     private var lastVelocity = CGPoint.zero
     
-    public let gestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
+    let gestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     private var leftToRightTransition = false
     
@@ -25,27 +27,23 @@ public class SwipeToSlidePanGestureInteractiveTransition: InteractiveTransitionC
     // This block gets run when the gesture recognizer start recognizing a pan. Inside, the start of a transition can be triggered.
     private let gestureRecognizedBlock: ((_ recognizer: UIPanGestureRecognizer) -> Void)
     
-    public init(in view: UIView, progressThreshold: CGFloat = 0.35, velocityOverrideThreshold: CGFloat = 550, recognizedBlock: @escaping ((_ recognizer: UIPanGestureRecognizer) -> Void)) {
+    init(in view: UIView, progressThreshold: CGFloat = 0.35, velocityOverrideThreshold: CGFloat = 550, recognizedBlock: @escaping ((_ recognizer: UIPanGestureRecognizer) -> Void)) {
         
         self.progressNeeded = progressThreshold
         self.velocityNeeded = velocityOverrideThreshold
         self.gestureRecognizedBlock = recognizedBlock
         
         super.init()
-        
-        self.gestureRecognizer.addTarget(self, action: #selector(SwipeToSlidePanGestureInteractiveTransition.pan(recognizer:)))
-        view.addGestureRecognizer(self.gestureRecognizer)
-        
     }
     
-    public override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+    override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         
         super.startInteractiveTransition(transitionContext)
         self.leftToRightTransition = gestureRecognizer.velocity(in: gestureRecognizer.view).x > 0
         
     }
     
-    @objc private func pan(recognizer: UIPanGestureRecognizer) {
+    @objc private func didScroll(_ scrollView: UIScrollView, vertically: Bool) {
         
         switch recognizer.state {
             
@@ -114,3 +112,5 @@ public class SwipeToSlidePanGestureInteractiveTransition: InteractiveTransitionC
         }
     }
 }
+
+

@@ -13,3 +13,4 @@ public enum InteractiveTransitionControllerState {
     case isInteracting
     case isInTearDown
 }
+

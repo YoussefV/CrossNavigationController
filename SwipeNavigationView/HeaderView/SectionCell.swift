@@ -64,8 +64,16 @@ class SectionCell: UICollectionViewCell {
 // MARK: ScrollViewDelegate Punting to HeaderView
 extension SectionCell : UIScrollViewDelegate {
     
+    internal func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        delegate?.scrollViewWillBeginDragging(scrollView, vertically: false)
+    }
+    
     internal func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll(scrollView, vertically: false)
+    }
+    
+    internal func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        delegate?.scrollViewWillEndDragging(scrollView, velocity, targetContentOffset, vertically: false)
     }
     
     internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

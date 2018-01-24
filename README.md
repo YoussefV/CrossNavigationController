@@ -7,7 +7,10 @@ A navigation controller that can switch between view controllers horizontally an
 
 - [x] Detect `HeaderView` scrolling direction and send that off to the `HeaderViewScrollDelegate`
 
-- [ ] Implement the transitioning logic at the bottom of the `HeaderView` file (conforming to `HeaderViewScrollDelegate`)
+- [x] Implement the transitioning logic at the bottom of the `HeaderView` file (conforming to `HeaderViewScrollDelegate`) [Thanks, [Milan Nosal!](https://github.com/MilanNosal/InteractiveTransitioningContainer/blob/master/InteractiveTransitioningContainer/SwipeToSlidePanGestureInteractiveTransition.swift)]
+
+- [ ] Add interactivity to transitioning logic (NOT WORKING)
+ ** I suspect I've wired things incorrectly **
 
 # The file structure:
 The file structure is a lot, but easy to understand.

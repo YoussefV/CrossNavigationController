@@ -1,6 +1,0 @@
-framework module InteractiveTransitioningContainer {
-  umbrella header "InteractiveTransitioningContainer-umbrella.h"
-
-  export *
-  module * { export * }
-}

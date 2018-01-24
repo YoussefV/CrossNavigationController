@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import InteractiveTransitioningContainer
 
 class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -28,6 +27,10 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     // MARK: Delegate fields
     fileprivate var animator: UIViewControllerAnimatedTransitioning!
     
+    // MARK: Interactive Transitioning Code
+    fileprivate var interactionController = HeaderViewInteractionController()
+    
+    
     var fromSection: Int = 0
     var fromRow: Int = 0
     
@@ -35,6 +38,19 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     var toRow: Int = 0
     
     weak var container: InteractiveContainerViewController?
+    
+    // MARK: InteractiveTransitioning Fields
+//    private let progressNeeded: CGFloat = 0.35
+//
+//    private let velocityNeeded: CGFloat = 550
+//
+//    private var lastVelocity = CGPoint.zero
+//
+//    private var leftToRightTransition = false
+//    private var shouldCompleteTransition = false
+//
+//    // This block gets run when the gesture recognizer start recognizing a pan. Inside, the start of a transition can be triggered.
+//    private let gestureRecognizedBlock: ((_ recognizer: UIPanGestureRecognizer) -> Void)
     
     // MARK: Scrolling Variables
     // This is not the cleanest way to do it,
@@ -92,8 +108,16 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     
     // MARK: Vertical Scrolling Code.
     //       This punts off the scrolling logic to the HeaderViewScrollDelegate
+    internal func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.scrollViewWillBeginDragging(scrollView, vertically: true)
+    }
+    
     internal func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.scrollViewDidScroll(scrollView, vertically: true)
+    }
+    
+    internal func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        self.scrollViewWillEndDragging(scrollView, velocity, targetContentOffset, vertically: true)
     }
     
     internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -103,11 +127,67 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
 }
 
 
-// FIXME: Needs to have interactive transitions
+// MARK: Interactive Transitioning Code
 extension HeaderView : HeaderViewScrollDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView, vertically: Bool) {
+        // MARK: Interactive Transitioning Code
+        let startingOffset = vertically ? scrollView.contentOffset.y : scrollView.contentOffset.x
+        let scrollVelocity = vertically ? scrollView.panGestureRecognizer.velocity(in: self).y :
+            scrollView.panGestureRecognizer.velocity(in: self).x
+        
+        // Initialize transition values needed for the interactionController
+        interactionController.setTransitionValues(startOffset: startingOffset,
+                                                  velocity: scrollVelocity,
+                                                  width: scrollView.bounds.width,
+                                                  vertically: vertically)
+        {
+            if (vertically) {
+                // Get the next vertical viewcontroller to transition to
+                self.toSection = scrollVelocity >= 0 ? self.currSection + 1 : self.currSection - 1
+                self.toSection = min(max(self.toSection, 0), HeaderView.pages.count - 1)
+                
+                self.fromSection = self.currSection
+                self.fromRow = self.lastPage[self.fromSection]
+                self.toRow = self.lastPage[self.toSection]
+                
+                if (self.toSection != self.fromSection) {
+                    // Initiate that transition if it's a different viewcontroller and not at the
+                    // edges
+                    self.container?.transition(to: HeaderView.pages[self.toSection][self.toRow],
+                                               interactive: true)
+                }
+            } else {
+                // Get the next horizontal viewcontroller to transition to
+                self.toRow = scrollVelocity >= 0 ? self.lastPage[self.fromSection] + 1 :
+                                                   self.lastPage[self.fromSection] - 1
+                self.toRow = min(max(self.toRow, 0), HeaderView.pages[self.fromSection].count - 1)
+                
+                self.fromSection = self.currSection
+                self.toSection   = self.currSection
+                self.fromRow     = self.lastPage[self.fromSection]
+                
+                if (self.toRow != self.fromRow) {
+                    // Initiate that transition if it's a different viewcontroller and not at the
+                    // edges
+                    self.container?.transition(to: HeaderView.pages[self.toSection][self.toRow],
+                                               interactive: true)
+                }
+            }
+        }
+    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView, vertically: Bool) {
-       // TODO: Interactive Transition
+        // MARK: Interactive Transitioning Code
+        let offset = vertically ? scrollView.contentOffset.y : scrollView.contentOffset.x
+        let scrollVelocity = vertically ? scrollView.panGestureRecognizer.velocity(in: self).y :
+            scrollView.panGestureRecognizer.velocity(in: self).x
+        interactionController.headerDidScroll(offset: offset, width: scrollView.bounds.width, velocity: scrollVelocity)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>, vertically: Bool) {
+        // MARK: Interactive Transitioning Code
+        interactionController.headerEndedScroll()
     }
     
     // Transition Fixed
@@ -231,7 +311,9 @@ extension HeaderView: InteractiveTransitioningContainerDelegate {
         // to react to scrolling
         
         // P.S.: you start a new transition (after finishing/cancelling the previous one) by calling transition(to: newPage, interactive: true) called on the interactiveContainer, and then you control it by using aforementioned methods
-        return nil
+        
+        // MARK: Interactive Transitioning Code
+        return self.interactionController
     }
     
     public func interactiveTransitioningContainer(

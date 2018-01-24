@@ -25,7 +25,7 @@ open class InteractiveTransitioningContainer: UIViewController {
     
     fileprivate(set) public var selectedViewController: UIViewController!
     
-    public var containerView: UIView!
+    internal(set) public var containerView: UIView!
     
     fileprivate weak var transitionCoordinatorField: InteractiveTransitioningContainerTransitionCoordinator?
     

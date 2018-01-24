@@ -17,8 +17,22 @@
 		D83C68792014AE1400960F22 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C68742014AE1400960F22 /* HeaderView.swift */; };
 		D83C687B2014AE1400960F22 /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C68762014AE1400960F22 /* SectionCell.swift */; };
 		D83C687C2014AE1400960F22 /* SectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C68772014AE1400960F22 /* SectionScrollView.swift */; };
-		D83C687E2014AE1F00960F22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C687D2014AE1E00960F22 /* ViewController.swift */; };
+		D83C687E2014AE1F00960F22 /* InteractiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C687D2014AE1E00960F22 /* InteractiveViewController.swift */; };
 		D83C68802014BB2500960F22 /* HeaderViewScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83C687F2014BB2500960F22 /* HeaderViewScrollDelegate.swift */; };
+		D8E8E9A220160FBA00543760 /* InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99820160FBA00543760 /* InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift */; };
+		D8E8E9A320160FBA00543760 /* InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99920160FBA00543760 /* InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift */; };
+		D8E8E9A420160FBA00543760 /* InteractiveTransitionControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99A20160FBA00543760 /* InteractiveTransitionControllerState.swift */; };
+		D8E8E9A520160FBA00543760 /* InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99B20160FBA00543760 /* InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift */; };
+		D8E8E9A620160FBA00543760 /* InteractiveTransitioningContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99C20160FBA00543760 /* InteractiveTransitioningContainer.swift */; };
+		D8E8E9A720160FBA00543760 /* InteractiveTransitioningContainerAnimationPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99D20160FBA00543760 /* InteractiveTransitioningContainerAnimationPositions.swift */; };
+		D8E8E9A820160FBA00543760 /* InteractiveTransitioningContainerChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99E20160FBA00543760 /* InteractiveTransitioningContainerChild.swift */; };
+		D8E8E9A920160FBA00543760 /* InteractiveTransitioningContainerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E99F20160FBA00543760 /* InteractiveTransitioningContainerDelegate.swift */; };
+		D8E8E9AA20160FBA00543760 /* InteractiveTransitioningContainerTransitionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9A020160FBA00543760 /* InteractiveTransitioningContainerTransitionContext.swift */; };
+		D8E8E9AB20160FBA00543760 /* InteractiveTransitioningContainerTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9A120160FBA00543760 /* InteractiveTransitioningContainerTransitionCoordinator.swift */; };
+		D8E8E9B02016100A00543760 /* SwipeToSlideInteractiveTransitioningContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9AD2016100A00543760 /* SwipeToSlideInteractiveTransitioningContainer.swift */; };
+		D8E8E9B12016100A00543760 /* SwipeToSlidePanGestureInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9AE2016100A00543760 /* SwipeToSlidePanGestureInteractiveTransition.swift */; };
+		D8E8E9B22016100A00543760 /* SwipeToSlideTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9AF2016100A00543760 /* SwipeToSlideTransitionAnimation.swift */; };
+		D8E8E9B42018071400543760 /* HeaderViewInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E8E9B32018071400543760 /* HeaderViewInteractionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +49,22 @@
 		D83C68742014AE1400960F22 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D83C68762014AE1400960F22 /* SectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
 		D83C68772014AE1400960F22 /* SectionScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionScrollView.swift; sourceTree = "<group>"; };
-		D83C687D2014AE1E00960F22 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D83C687D2014AE1E00960F22 /* InteractiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveViewController.swift; sourceTree = "<group>"; };
 		D83C687F2014BB2500960F22 /* HeaderViewScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewScrollDelegate.swift; sourceTree = "<group>"; };
+		D8E8E99820160FBA00543760 /* InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift; sourceTree = "<group>"; };
+		D8E8E99920160FBA00543760 /* InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift; sourceTree = "<group>"; };
+		D8E8E99A20160FBA00543760 /* InteractiveTransitionControllerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitionControllerState.swift; sourceTree = "<group>"; };
+		D8E8E99B20160FBA00543760 /* InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift; sourceTree = "<group>"; };
+		D8E8E99C20160FBA00543760 /* InteractiveTransitioningContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainer.swift; sourceTree = "<group>"; };
+		D8E8E99D20160FBA00543760 /* InteractiveTransitioningContainerAnimationPositions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerAnimationPositions.swift; sourceTree = "<group>"; };
+		D8E8E99E20160FBA00543760 /* InteractiveTransitioningContainerChild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerChild.swift; sourceTree = "<group>"; };
+		D8E8E99F20160FBA00543760 /* InteractiveTransitioningContainerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerDelegate.swift; sourceTree = "<group>"; };
+		D8E8E9A020160FBA00543760 /* InteractiveTransitioningContainerTransitionContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerTransitionContext.swift; sourceTree = "<group>"; };
+		D8E8E9A120160FBA00543760 /* InteractiveTransitioningContainerTransitionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioningContainerTransitionCoordinator.swift; sourceTree = "<group>"; };
+		D8E8E9AD2016100A00543760 /* SwipeToSlideInteractiveTransitioningContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeToSlideInteractiveTransitioningContainer.swift; sourceTree = "<group>"; };
+		D8E8E9AE2016100A00543760 /* SwipeToSlidePanGestureInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeToSlidePanGestureInteractiveTransition.swift; sourceTree = "<group>"; };
+		D8E8E9AF2016100A00543760 /* SwipeToSlideTransitionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeToSlideTransitionAnimation.swift; sourceTree = "<group>"; };
+		D8E8E9B32018071400543760 /* HeaderViewInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewInteractionController.swift; sourceTree = "<group>"; };
 		FF143FDE5D0C064FAE5C2E03 /* Pods-SwipeNavigationView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeNavigationView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeNavigationView/Pods-SwipeNavigationView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,8 +110,9 @@
 			isa = PBXGroup;
 			children = (
 				D83C68602014ADE300960F22 /* AppDelegate.swift */,
-				D83C687D2014AE1E00960F22 /* ViewController.swift */,
+				D83C687D2014AE1E00960F22 /* InteractiveViewController.swift */,
 				D83C68722014AE1400960F22 /* HeaderView */,
+				D8E8E99620160FBA00543760 /* InteractiveTransitioningContainer */,
 				D83C68642014ADE300960F22 /* Main.storyboard */,
 				D83C68672014ADE300960F22 /* Assets.xcassets */,
 				D83C68692014ADE300960F22 /* LaunchScreen.storyboard */,
@@ -96,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				D83C68742014AE1400960F22 /* HeaderView.swift */,
+				D8E8E9B32018071400543760 /* HeaderViewInteractionController.swift */,
 				D83C687F2014BB2500960F22 /* HeaderViewScrollDelegate.swift */,
 				D83C68732014AE1400960F22 /* HeaderLabel.swift */,
 				D83C68762014AE1400960F22 /* SectionCell.swift */,
@@ -103,6 +133,43 @@
 				C20E75A82014EEFE0006B861 /* PageController.swift */,
 			);
 			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		D8E8E99620160FBA00543760 /* InteractiveTransitioningContainer */ = {
+			isa = PBXGroup;
+			children = (
+				D8E8E99720160FBA00543760 /* Core */,
+				D8E8E99C20160FBA00543760 /* InteractiveTransitioningContainer.swift */,
+				D8E8E99D20160FBA00543760 /* InteractiveTransitioningContainerAnimationPositions.swift */,
+				D8E8E99E20160FBA00543760 /* InteractiveTransitioningContainerChild.swift */,
+				D8E8E99F20160FBA00543760 /* InteractiveTransitioningContainerDelegate.swift */,
+				D8E8E9A020160FBA00543760 /* InteractiveTransitioningContainerTransitionContext.swift */,
+				D8E8E9A120160FBA00543760 /* InteractiveTransitioningContainerTransitionCoordinator.swift */,
+				D8E8E9AC2016100A00543760 /* SwipeToSlide */,
+			);
+			name = InteractiveTransitioningContainer;
+			path = SwipeNavigationView/InteractiveTransitioningContainer;
+			sourceTree = SOURCE_ROOT;
+		};
+		D8E8E99720160FBA00543760 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D8E8E99820160FBA00543760 /* InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift */,
+				D8E8E99920160FBA00543760 /* InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift */,
+				D8E8E99A20160FBA00543760 /* InteractiveTransitionControllerState.swift */,
+				D8E8E99B20160FBA00543760 /* InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D8E8E9AC2016100A00543760 /* SwipeToSlide */ = {
+			isa = PBXGroup;
+			children = (
+				D8E8E9AD2016100A00543760 /* SwipeToSlideInteractiveTransitioningContainer.swift */,
+				D8E8E9AE2016100A00543760 /* SwipeToSlidePanGestureInteractiveTransition.swift */,
+				D8E8E9AF2016100A00543760 /* SwipeToSlideTransitionAnimation.swift */,
+			);
+			path = SwipeToSlide;
 			sourceTree = "<group>";
 		};
 		D921982DD0F8B8E3F8D04897 /* Pods */ = {
@@ -245,11 +312,25 @@
 			files = (
 				C20E75A92014EEFE0006B861 /* PageController.swift in Sources */,
 				D83C68782014AE1400960F22 /* HeaderLabel.swift in Sources */,
+				D8E8E9A320160FBA00543760 /* InteractiveTransitionContainerPercentDrivenInteractiveTransition.swift in Sources */,
+				D8E8E9AA20160FBA00543760 /* InteractiveTransitioningContainerTransitionContext.swift in Sources */,
+				D8E8E9A220160FBA00543760 /* InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition.swift in Sources */,
 				D83C687C2014AE1400960F22 /* SectionScrollView.swift in Sources */,
+				D8E8E9A820160FBA00543760 /* InteractiveTransitioningContainerChild.swift in Sources */,
+				D8E8E9B12016100A00543760 /* SwipeToSlidePanGestureInteractiveTransition.swift in Sources */,
+				D8E8E9B02016100A00543760 /* SwipeToSlideInteractiveTransitioningContainer.swift in Sources */,
 				D83C687B2014AE1400960F22 /* SectionCell.swift in Sources */,
-				D83C687E2014AE1F00960F22 /* ViewController.swift in Sources */,
+				D8E8E9A720160FBA00543760 /* InteractiveTransitioningContainerAnimationPositions.swift in Sources */,
+				D8E8E9A420160FBA00543760 /* InteractiveTransitionControllerState.swift in Sources */,
+				D8E8E9A520160FBA00543760 /* InteractiveTransitioningContainerLayerBasedPercentDrivenInteractiveTransition.swift in Sources */,
+				D8E8E9A920160FBA00543760 /* InteractiveTransitioningContainerDelegate.swift in Sources */,
+				D83C687E2014AE1F00960F22 /* InteractiveViewController.swift in Sources */,
+				D8E8E9A620160FBA00543760 /* InteractiveTransitioningContainer.swift in Sources */,
+				D8E8E9B22016100A00543760 /* SwipeToSlideTransitionAnimation.swift in Sources */,
 				D83C68612014ADE300960F22 /* AppDelegate.swift in Sources */,
 				D83C68802014BB2500960F22 /* HeaderViewScrollDelegate.swift in Sources */,
+				D8E8E9AB20160FBA00543760 /* InteractiveTransitioningContainerTransitionCoordinator.swift in Sources */,
+				D8E8E9B42018071400543760 /* HeaderViewInteractionController.swift in Sources */,
 				D83C68792014AE1400960F22 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,8 +470,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D89CSBBCFJ;
+				DEVELOPMENT_TEAM = F866ZHAR49;
 				INFOPLIST_FILE = SwipeNavigationView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.SwipeNavigationView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -405,8 +487,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D89CSBBCFJ;
+				DEVELOPMENT_TEAM = F866ZHAR49;
 				INFOPLIST_FILE = SwipeNavigationView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.SwipeNavigationView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
