@@ -14,11 +14,8 @@ import UIKit
 class HeaderViewInteractionController : InteractiveTransitionContainerAnimatorBasedPercentDrivenInteractiveTransition {
     private let progressNeeded: CGFloat
     
-    private let velocityNeeded: CGFloat
-    
-    private var lastVelocity = CGPoint.zero
-    
-    private var startOffset   : CGFloat = 0.0
+    // FIXME: Turn startoffset private
+    var startOffset   : CGFloat = 0.0
     private var triggerOffset : CGFloat = 0.0
     
     private var positiveTransition = false
@@ -26,24 +23,24 @@ class HeaderViewInteractionController : InteractiveTransitionContainerAnimatorBa
     
     private var recognizedBlock : (() -> ())
     
-    private var shouldCompleteTransition = false
+    private var shouldAdjustIndices = false
     
-    init(progressThreshold: CGFloat = 0.35, velocityOverrideThreshold: CGFloat = 550) {
+    init(progressThreshold: CGFloat = 0.35) {
         self.progressNeeded = progressThreshold
-        self.velocityNeeded = velocityOverrideThreshold
         self.recognizedBlock = {}
         super.init()
     }
     
     func setTransitionValues(startOffset: CGFloat, velocity: CGFloat, width: CGFloat, vertically: Bool, recognizedBlock: @escaping (() -> ())) {
         self.startOffset        = startOffset
-        self.triggerOffset      = fabs(width * progressNeeded)
         self.positiveTransition = velocity >= 0
+        self.triggerOffset      = startOffset
+        triggerOffset -= positiveTransition ? width/2.0 : -width/2.0
         self.verticalTransition = vertically
         self.recognizedBlock    = recognizedBlock
     }
     
-    func headerDidScroll(offset: CGFloat, width: CGFloat, velocity : CGFloat = 0) {
+    func headerDidScroll(offset: CGFloat, width: CGFloat) {
         // comming back to initial position in screen can cancel current animation
         // and we need ignore those changes
         guard state != .isInTearDown else {
@@ -64,37 +61,53 @@ class HeaderViewInteractionController : InteractiveTransitionContainerAnimatorBa
         
         let translation = offset - startOffset
         
+        let progress =  fabs(translation) / width
+        
         // This code checks if we came back to starting point, and if yes,
         // we cancel the current transition
-        if (positiveTransition && translation < 0) ||
-           (!positiveTransition && translation > 0) {
-            
-            self.shouldCompleteTransition = false
+        if (positiveTransition && translation > 0) ||
+           (!positiveTransition && translation < 0 ||
+            progress > 1) {
             self.updateInteractiveTransition(percentComplete: 0)
             self.cancelInteractiveTransition()
             return
         }
         
-        let progress = translation / width
+        if (progress > 1.0) {
+            print("GREATER THAN ONE")
+        }
         
         // Decision if we came far enough to complete the transition automatically even
         // if we finish pan gesture
-        self.shouldCompleteTransition = fabs(translation) > triggerOffset || fabs(velocity) > velocityNeeded
+        
+        //print("Is positive: \(positiveTransition), translation: \(translation)")
+        //print("Updating transition with progress of: \(progress)")
         
         self.updateInteractiveTransition(percentComplete: progress)
     }
     
-    func headerEndedScroll() {
+    func headerEndedScroll(with targetContentOffset: CGFloat) {
         guard transitionContext != nil, state != .isInTearDown else {
             return
         }
         
-        if shouldCompleteTransition {
+        //print("StartingOffset is: \(startOffset), targetOffset is: \(targetContentOffset)")
+        
+        let willCompleteTransition = (targetContentOffset <= triggerOffset && positiveTransition) ||
+                                     (targetContentOffset >= triggerOffset && !positiveTransition)
+        
+        if willCompleteTransition {
             self.finishInteractiveTransition()
         } else {
             self.cancelInteractiveTransition()
         }
-        shouldCompleteTransition = false
+        
+        shouldAdjustIndices = willCompleteTransition
+    }
+    
+    func headerShouldAdjustIndices(_ completion : @escaping (Bool) -> ()) {
+        completion(shouldAdjustIndices)
+        shouldAdjustIndices = false
     }
     
     

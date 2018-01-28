@@ -75,6 +75,7 @@ public class InteractiveTransitionContainerPercentDrivenInteractiveTransition: N
         }
         
         self.state = .isInTearDown
+        //print("INITIATING SUPERVIEWCANCELLATION")
         transitionContext!.cancelInteractiveTransition()
     }
     
@@ -91,6 +92,7 @@ public class InteractiveTransitionContainerPercentDrivenInteractiveTransition: N
     
     open func interactiveTransitionCompleted() {
         self.state = .isInactive
+       // print("DONE?")
     }
 }
 

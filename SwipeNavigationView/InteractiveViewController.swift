@@ -21,7 +21,7 @@ class InteractiveContainerViewController: InteractiveTransitioningContainer {
         self.containerView = UIView()
         self.view.addSubview(containerView)
         
-        containerDelegate = headerView
+        self.containerDelegate = headerView
         
         headerView.container = self
         self.view.addSubview(headerView)

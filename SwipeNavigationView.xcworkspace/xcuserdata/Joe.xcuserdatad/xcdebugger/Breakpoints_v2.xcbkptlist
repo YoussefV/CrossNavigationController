@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "183"
             endingLineNumber = "183"
-            landmarkName = "scrollViewDidScroll(_:vertically:)"
+            landmarkName = "scrollViewWillBeginDragging(_:vertically:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "299"
             endingLineNumber = "299"
-            landmarkName = "interactiveTransitioningContainer(_:interactionControllerFor:)"
+            landmarkName = "interactiveTransitioningContainer(_:animationPositionsForTransitionFrom:to:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -20,16 +20,15 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     
     
     // Pages
-    static let pages = [[PageController(title: "Sect0-Page0", color: .red), PageController(title: "Sect0-Page1", color: .green), PageController(title: "Sect0-Page2", color: .blue)],
-                        [PageController(title: "Sect1-Page0", color: .cyan), PageController(title: "Sect1-Page1", color: .yellow)]]
+    static let pages = [[PageController(title: "Sect0-Page0", color: .green), PageController(title: "Sect0-Page1", color: .red), PageController(title: "Sect0-Page2", color: .orange)],
+                        [PageController(title: "Sect1-Page0", color: .cyan), PageController(title: "Sect0-Page1", color: .yellow)]]
                         
     
     // MARK: Delegate fields
-    fileprivate var animator: UIViewControllerAnimatedTransitioning!
+    fileprivate lazy var animator: UIViewControllerAnimatedTransitioning! = SwipeToSlideTransitionAnimation()
     
     // MARK: Interactive Transitioning Code
-    fileprivate var interactionController = HeaderViewInteractionController()
-    
+    fileprivate lazy var interactionController = HeaderViewInteractionController()
     
     var fromSection: Int = 0
     var fromRow: Int = 0
@@ -38,19 +37,6 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
     var toRow: Int = 0
     
     weak var container: InteractiveContainerViewController?
-    
-    // MARK: InteractiveTransitioning Fields
-//    private let progressNeeded: CGFloat = 0.35
-//
-//    private let velocityNeeded: CGFloat = 550
-//
-//    private var lastVelocity = CGPoint.zero
-//
-//    private var leftToRightTransition = false
-//    private var shouldCompleteTransition = false
-//
-//    // This block gets run when the gesture recognizer start recognizing a pan. Inside, the start of a transition can be triggered.
-//    private let gestureRecognizedBlock: ((_ recognizer: UIPanGestureRecognizer) -> Void)
     
     // MARK: Scrolling Variables
     // This is not the cleanest way to do it,
@@ -70,8 +56,6 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = 0
-        
-        self.animator = SwipeToSlideTransitionAnimation()
         
         super.init(frame: frame, collectionViewLayout: flowLayout)
         
@@ -126,22 +110,38 @@ class HeaderView: UICollectionView, UICollectionViewDataSource, UICollectionView
 
 }
 
+// TODO:
+/**
+ 
+ --- OBSERVE:  Problem C1: StartOffset is reset incorrectly when the transition restarts
+ Problem S1: Sometimes gets stuck on a vc, even though print movement is correct, the vc's are not moving
+
+ 
+ 
+ --- ANALYZE:   Problem C1: I'm calling scrollViewWillBeginDragging after the transition cancels too late.
+ 
+ 
+ --- FIX: TEMPFIX C1: Determine starting offset by rounding to nearest VC.
+          LONGFIX C1: Make your own UITransitioning stuff
+ 
+ 
+ 
+ **/
+
 
 // MARK: Interactive Transitioning Code
 extension HeaderView : HeaderViewScrollDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView, vertically: Bool) {
         // MARK: Interactive Transitioning Code
-        let startingOffset = vertically ? scrollView.contentOffset.y : scrollView.contentOffset.x
+        let startingOffset = vertically ? CGFloat(self.fromSection) * scrollView.frame.height  :
+                                        CGFloat(self.lastPage[self.fromSection]) * scrollView.frame.width
+//        let startingOffset = vertically ? scrollView.contentOffset.y : scrollView.contentOffset.x
+        
         let scrollVelocity = vertically ? scrollView.panGestureRecognizer.velocity(in: self).y :
             scrollView.panGestureRecognizer.velocity(in: self).x
-        
-        // Initialize transition values needed for the interactionController
-        interactionController.setTransitionValues(startOffset: startingOffset,
-                                                  velocity: scrollVelocity,
-                                                  width: scrollView.bounds.width,
-                                                  vertically: vertically)
-        {
+            
+        let recognizedBlock = {
             if (vertically) {
                 // Get the next vertical viewcontroller to transition to
                 self.toSection = scrollVelocity >= 0 ? self.currSection + 1 : self.currSection - 1
@@ -159,67 +159,80 @@ extension HeaderView : HeaderViewScrollDelegate {
                 }
             } else {
                 // Get the next horizontal viewcontroller to transition to
-                self.toRow = scrollVelocity >= 0 ? self.lastPage[self.fromSection] + 1 :
-                                                   self.lastPage[self.fromSection] - 1
+                let currentRow = Int(scrollView.contentOffset.x / scrollView.frame.width)
+                self.toRow = scrollVelocity < 0 ?  currentRow + 1 :
+                                                   currentRow - 1
                 self.toRow = min(max(self.toRow, 0), HeaderView.pages[self.fromSection].count - 1)
                 
                 self.fromSection = self.currSection
                 self.toSection   = self.currSection
-                self.fromRow     = self.lastPage[self.fromSection]
+                self.fromRow     = currentRow
                 
-                if (self.toRow != self.fromRow) {
-                    // Initiate that transition if it's a different viewcontroller and not at the
-                    // edges
+                print("Starting transition: fromRow: \(self.fromRow), toRow: \(self.toRow)\n")
+                
+                // Initiate that transition if it's a different viewcontroller and not at the
+                // edges
+                if (self.fromRow != self.toRow) {
                     self.container?.transition(to: HeaderView.pages[self.toSection][self.toRow],
                                                interactive: true)
                 }
             }
         }
+
+        // Initialize transition values needed for the interactionController
+        interactionController.setTransitionValues(startOffset: startingOffset,
+                                                  velocity: scrollVelocity,
+                                                  width: scrollView.bounds.width,
+                                                  vertically: vertically,
+                                                  recognizedBlock: recognizedBlock)
+        
+        // Running the recognized block
+        recognizedBlock()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView, vertically: Bool) {
-        // MARK: Interactive Transitioning Code
+        // Ignore if the user isn't touching
+        if (scrollView.panGestureRecognizer.state == .ended ||
+            scrollView.panGestureRecognizer.state == .possible) {
+           return
+        }
+        
+        // If you stopped the transition, restart it:
+        if (interactionController.state != .isInteracting) {
+            self.scrollViewWillBeginDragging(scrollView, vertically: vertically)
+            return
+        }
+        
+        // Otherwise, just adjust the transition:
         let offset = vertically ? scrollView.contentOffset.y : scrollView.contentOffset.x
-        let scrollVelocity = vertically ? scrollView.panGestureRecognizer.velocity(in: self).y :
-            scrollView.panGestureRecognizer.velocity(in: self).x
-        interactionController.headerDidScroll(offset: offset, width: scrollView.bounds.width, velocity: scrollVelocity)
+//        print("scrollViewDidScroll with startOffset: \(interactionController.startOffset), currentOffset: \(offset)")
+        interactionController.headerDidScroll(offset: offset, width: scrollView.bounds.width)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>, vertically: Bool) {
         // MARK: Interactive Transitioning Code
-        interactionController.headerEndedScroll()
+        let offset = vertically ? targetContentOffset.pointee.y : targetContentOffset.pointee.x
+        interactionController.headerEndedScroll(with: offset)
     }
     
     // Transition Fixed
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView, vertically: Bool) {
-        // Calculate new page based on new offset
-        let newPage = Int((scrollView.contentOffset.x * CGFloat(HeaderView.pages[currSection].count)) / scrollView.contentSize.width)
-        
-        // Calculate new row based on new offset
-        let newSection = Int(scrollView.contentOffset.y * CGFloat(HeaderView.pages.count) /                         scrollView.contentSize.height)
-        
-        
-        if (vertically) {
-            // this does animated non-interactive transition
-            fromSection = currSection
-            toSection = newSection
-            fromRow = lastPage[fromSection]
-            toRow = lastPage[toSection]
-            container?.transition(to: HeaderView.pages[toSection][toRow], animated: true, interactive: false)
-            
-            // Do ViewController transition stuff (vertically)
-            self.transitionVertically(fromSection: currSection, toSection: newSection)
-            self.currSection = newSection
-        } else {
-            fromSection = currSection
-            toSection = currSection
-            fromRow = lastPage[fromSection]
-            toRow = newPage
-            container?.transition(to: HeaderView.pages[toSection][toRow], animated: true, interactive: false)
-            
-             // Do ViewController transition stuff (horizontally)
-            self.transitionHorizontally(fromPage: lastPage[currSection], toPage: newPage)
-            self.lastPage[currSection] = newPage
+        interactionController.headerShouldAdjustIndices() { finished in
+            if finished {
+//                print("SUCCESFULL")
+                if vertically {
+                    self.fromSection = self.toSection
+                } else {
+//                    print("Setting current row fromRow: \(self.fromRow) toRow: \(self.toRow)\n")
+                    self.fromRow = self.toRow
+                    self.lastPage[self.fromSection] = self.fromRow
+                }
+            } else {
+//                print("CANCELLED")
+//                print("Cancelling the stuff fromRow: \(self.fromRow) toRow: \(self.toRow)\n")
+                self.fromRow = self.lastPage[self.fromSection]
+                self.toRow   = self.lastPage[self.fromSection]
+            }
         }
     }
     
@@ -313,6 +326,7 @@ extension HeaderView: InteractiveTransitioningContainerDelegate {
         // P.S.: you start a new transition (after finishing/cancelling the previous one) by calling transition(to: newPage, interactive: true) called on the interactiveContainer, and then you control it by using aforementioned methods
         
         // MARK: Interactive Transitioning Code
+        self.interactionController.animator = animationController
         return self.interactionController
     }
     
