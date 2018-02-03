@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HeaderViewScrollDelegate {
+protocol CrossConHeaderViewScrollDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView, vertically: Bool)
     
@@ -18,4 +18,14 @@ protocol HeaderViewScrollDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>, vertically: Bool)
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView, vertically: Bool)
+}
+
+protocol CrossConTransitionDelegate {
+
+    func startTransition(vertically : Bool, positive : Bool)
+    
+    func updateTransition(with progress: CGFloat, vertically: Bool)
+    
+    func completeTransition(to newIndex: IndexPath)
+    
 }

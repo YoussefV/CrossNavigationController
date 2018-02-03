@@ -8,6 +8,11 @@
 
 import UIKit
 
+//
+// Used for CrossConHeaderSectionCell.
+// Just a custom
+//
+
 class HeaderLabel: UILabel {
     
     override init(frame: CGRect) {

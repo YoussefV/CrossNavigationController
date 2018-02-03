@@ -9,7 +9,7 @@
 import UIKit
 
 //This is your main view controllers cell object
-class SectionCell: UICollectionViewCell {
+class CrossConHeaderSectionCell: UICollectionViewCell {
     
     // MARK: Constants
     let pageCellId = "pageCellId"
@@ -17,10 +17,10 @@ class SectionCell: UICollectionViewCell {
     // MARK: Private Internal Variables
     fileprivate let overlayView = OverlayView()
     fileprivate let scrollView  = SectionScrollView()
-    fileprivate var delegate    : HeaderViewScrollDelegate?
+    fileprivate var delegate    : CrossConHeaderViewScrollDelegate?
     
     // MARK: Initializer function
-    func setupSection(for rowNumber: Int, with delegate : HeaderViewScrollDelegate) {
+    func setupSection(for sectionNumber: Int, with delegate : CrossConHeaderViewScrollDelegate) {
         // Set Delegates
         self.delegate = delegate
         self.scrollView.delegate = self
@@ -29,8 +29,9 @@ class SectionCell: UICollectionViewCell {
         self.addSubview(self.scrollView)
         self.addSubview(self.overlayView)
         
+        // Add layout constraints
         self.addLayoutConstraints()
-        self.scrollView.setupPages(for: rowNumber)
+        self.scrollView.setupPages(for: sectionNumber)
     }
     
     private func addLayoutConstraints() {
@@ -62,7 +63,7 @@ class SectionCell: UICollectionViewCell {
 }
 
 // MARK: ScrollViewDelegate Punting to HeaderView
-extension SectionCell : UIScrollViewDelegate {
+extension CrossConHeaderSectionCell : UIScrollViewDelegate {
     
     internal func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDragging(scrollView, vertically: false)

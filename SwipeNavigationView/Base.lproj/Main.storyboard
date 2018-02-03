@@ -13,43 +13,46 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SwipeNavigationView" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOK-Zm-Luo">
-                                <rect key="frame" x="0.0" y="20" width="375" height="90"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="GEs-gt-1Xb"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYy-du-kLX">
-                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NOT BEING USED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dn8-uw-Pzk">
+                                <rect key="frame" x="16" y="121" width="297" height="119"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fp-Do-JDH">
+                                <rect key="frame" x="73" y="337" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="dE2-IF-rm3" kind="embed" id="Taw-6h-nay"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qYy-du-kLX" secondAttribute="bottom" id="2tK-CX-N3Z"/>
-                            <constraint firstItem="EOK-Zm-Luo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2uS-cO-4a6"/>
-                            <constraint firstItem="EOK-Zm-Luo" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9In-Jl-EeD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qYy-du-kLX" secondAttribute="trailing" id="Dec-oP-B8K"/>
-                            <constraint firstItem="EOK-Zm-Luo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="Lu2-k3-jVz"/>
-                            <constraint firstItem="qYy-du-kLX" firstAttribute="top" secondItem="EOK-Zm-Luo" secondAttribute="bottom" id="bfs-yb-Zan"/>
-                            <constraint firstItem="qYy-du-kLX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qhS-ju-tml"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="headerContainerView" destination="EOK-Zm-Luo" id="ldB-Qd-TeM"/>
-                        <outlet property="ownContainerView" destination="qYy-du-kLX" id="t9G-ra-w2j"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="wwG-7K-K1v">
+            <objects>
+                <viewController id="dE2-IF-rm3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="a8W-gg-QIO">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kia-2g-v3D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
 </document>

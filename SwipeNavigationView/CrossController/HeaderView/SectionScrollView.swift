@@ -22,10 +22,15 @@ class OverlayView: UIView {
     }
 }
 
+// This view is the row that contains all the different pages (labels)
+// the rows are used for the header's sections. Each ScrollView has a
+// view on top of it called the overlay view that stretches across the
+// size of the HeaderView and captures all the touches and relays
+// them to the ScrollView.
 class SectionScrollView: UIScrollView {
     let contentView = UIView()
     
-    func setupPages(for rowNumber: Int){
+    func setupPages(for sectionNumber: Int){
         // Autolayout stuff
         self.translatesAutoresizingMaskIntoConstraints             = false
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +39,7 @@ class SectionScrollView: UIScrollView {
         self.isPagingEnabled = true
         self.addSubview(contentView)
         
-        let pageCount = HeaderView.pages[rowNumber].count
+        let pageCount = CrossConContainerViewController.pages[sectionNumber].count
         
         NSLayoutConstraint(item: contentView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top,
                            multiplier: 1.0, constant: 0).isActive = true
@@ -48,7 +53,7 @@ class SectionScrollView: UIScrollView {
         var lastLabel : HeaderLabel? = nil
         for i in 0..<pageCount {
             let label = HeaderLabel()
-            label.text = HeaderView.pages[rowNumber][i].pageTitle
+            label.text = CrossConContainerViewController.pages[sectionNumber][i].pageTitle
             self.contentView.addSubview(label)
             
             NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self.contentView, attribute: .top, multiplier: 1.0, constant: 0).isActive = true
