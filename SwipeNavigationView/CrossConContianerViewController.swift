@@ -18,8 +18,14 @@ class CrossConContainerViewController : UIViewController {
     lazy var transitioner : CrossConTransitioner  = CrossConTransitioner(with: controllersView)
     
     // Pages
-    static let pages = [[PageController(title: "Sect0-Page0", color: .green), PageController(title: "Sect0-Page1", color: .red), PageController(title: "Sect0-Page2", color: .orange)],
-                        [PageController(title: "Sect1-Page0", color: .cyan), PageController(title: "Sect0-Page1", color: .yellow)]]
+    static let pages = [
+        [PageController(title: "Sect0-Page0", color: .green),
+         PageController(title: "Sect0-Page1", color: .red),
+         PageController(title: "Sect0-Page2", color: .orange),
+         PageController(title: "Sect0-Page3", color: .brown),
+         PageController(title: "Sect0-Page4", color: .white)],
+        
+        [PageController(title: "Sect1-Page0", color: .cyan), PageController(title: "Sect0-Page1", color: .yellow)]]
     
     open override func loadView() {
         super.loadView()
@@ -50,13 +56,5 @@ class CrossConContainerViewController : UIViewController {
     }
 }
 
-//extension UIView {
-//    func fillSuperview() {
-//        self.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: self.superview!, attribute: .top, multiplier: 1.0, constant: 0.0).isActive = true
-//        NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: self.superview!, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
-//        NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: self.superview!, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
-//        NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: self.superview!, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
-//    }
-//}
+
 

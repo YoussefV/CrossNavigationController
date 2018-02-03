@@ -11,33 +11,33 @@ import UIKit
 class CrossConControllersSectionCell: UICollectionViewCell {
     
     // MARK: Constants
-    let controllerCellId = "controllerCellId"
+    let controllerCellId = "controllersSectionCellId"
     
-    let scrollView  = ControllerScrollView(frame: .zero)
+    let controllersCollection  = ControllersCollectionView(frame: .zero)
     
 
     // MARK: Initializer function
     func setupSection(for sectionNumber: Int) {
         
         // Layout Subviews
-        self.addSubview(self.scrollView)
+        self.addSubview(self.controllersCollection)
         
         // Add layout constraints
         self.addLayoutConstraints()
-        self.scrollView.setupPages(for: sectionNumber)
+        self.controllersCollection.setSectionNumber(sectionNumber)
     }
     
     private func addLayoutConstraints() {
         // Remove Bad Layout Stuff
-        self.scrollView.showsHorizontalScrollIndicator             = false
-        self.scrollView.translatesAutoresizingMaskIntoConstraints  = false
+        self.controllersCollection.showsHorizontalScrollIndicator             = false
+        self.controllersCollection.translatesAutoresizingMaskIntoConstraints  = false
         
         // overlayView stretches everything
         NSLayoutConstraint.activate([
-        self.scrollView.heightAnchor.constraint(equalTo: self.heightAnchor),
-        self.scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-        self.scrollView.leftAnchor.constraint(equalTo: self.leftAnchor),
-        self.scrollView.rightAnchor.constraint(equalTo: self.rightAnchor),
+        self.controllersCollection.heightAnchor.constraint(equalTo: self.heightAnchor),
+        self.controllersCollection.topAnchor.constraint(equalTo: self.topAnchor),
+        self.controllersCollection.leftAnchor.constraint(equalTo: self.leftAnchor),
+        self.controllersCollection.rightAnchor.constraint(equalTo: self.rightAnchor),
         ])
     }
 }

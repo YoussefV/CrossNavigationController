@@ -24,7 +24,7 @@ class CrossConTransitioner : CrossConTransitionDelegate {
     
     
     func startTransition(vertically: Bool, positive: Bool) {
-        print("STARTING TRANSITION. isVertical: \(vertically), isPositive: \(positive)")
+     //   print("STARTING TRANSITION. isVertical: \(vertically), isPositive: \(positive)")
     }
     
     func updateTransition(with progress: CGFloat, vertically: Bool) {
@@ -35,7 +35,7 @@ class CrossConTransitioner : CrossConTransitionDelegate {
     
     func completeTransition(to newIndex: IndexPath) {
         self.indexPath = newIndex
-        print("TRANSITION DONE")
+       // print("TRANSITION DONE")
     }
     
 }

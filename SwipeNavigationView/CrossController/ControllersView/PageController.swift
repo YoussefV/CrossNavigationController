@@ -39,6 +39,12 @@ class PageController: UIViewController {
             print("CYAN   ViewController loaded")
         case .yellow:
             print("YELLOW ViewController loaded")
+        case .brown:
+            print("BROWN  ViewController loaded")
+        case .white:
+            print("WHITE  ViewController loaded")
+        case .blue:
+            print("BLUE   ViewController loaded")
         default:
             print("UNKNOWN COLOR")
         }
@@ -57,6 +63,36 @@ class PageController: UIViewController {
             print("CYAN   ViewController willAppear")
         case .yellow:
             print("YELLOW ViewController willAppear")
+        case .brown:
+            print("BROWN  ViewController willAppear")
+        case .white:
+            print("WHITE  ViewController willAppear")
+        case .blue:
+            print("BLUE   ViewController willAppear")
+        default:
+            print("UNKNOWN COLOR")
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        switch (backColor) {
+        case .red:
+            print("RED    ViewController willDisappear")
+        case .green:
+            print("GREEN  ViewController willDisappear")
+        case .orange:
+            print("ORANGE ViewController willDisappear")
+        case .cyan:
+            print("CYAN   ViewController willDisappear")
+        case .yellow:
+            print("YELLOW ViewController willDisappear")
+        case .brown:
+            print("BROWN  ViewController willDisappear")
+        case .white:
+            print("WHITE  ViewController willDisappear")
+        case .blue:
+            print("BLUE   ViewController willDisappear")
         default:
             print("UNKNOWN COLOR")
         }

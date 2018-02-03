@@ -10,21 +10,7 @@ import UIKit
 
 class CrossConControllersView: UICollectionView, UICollectionViewDelegateFlowLayout {
     
-    // Pseudocode:
-    //   - .isUserInteractionEnabled = false
-    //   - .isDirectionalLockEnabled = true (Do you really need it?)
-    //
-    //
-    
     private let controllersCellId = "controllerCellId"
-    
-    // DONE
-    // DONE
-    // DONE
-    // DONE
-    // TODO:  5 - Connect to the HeaderViewController
-    // 
-    //
 
     init(frame: CGRect) {
         // Initialize the view's Layout
@@ -39,7 +25,10 @@ class CrossConControllersView: UICollectionView, UICollectionViewDelegateFlowLay
         self.dataSource      = self
         self.clipsToBounds   = true
         self.isPagingEnabled = true
+        self.isUserInteractionEnabled = false
+        self.isDirectionalLockEnabled = true
         self.backgroundColor = UIColor.clear
+        
         
         //Register Cell (Insted of doing this in storyboard)
         self.register(CrossConControllersSectionCell.self, forCellWithReuseIdentifier: controllersCellId)
@@ -93,11 +82,9 @@ extension CrossConControllersView {
             
             let offset = CGPoint(x: sectionCell.frame.width * offsetRatio, y: 0)
             
-            sectionCell.scrollView.setContentOffset(offset, animated: false)
+            sectionCell.controllersCollection.setContentOffset(offset, animated: false)
         }
     }
-    
-    
     
 }
 

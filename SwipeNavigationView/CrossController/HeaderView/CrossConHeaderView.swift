@@ -139,10 +139,10 @@ extension CrossConHeaderView : CrossConHeaderViewScrollDelegate {
         
         if (vertically && currSection != newIndex) {
             self.currSection = Int(offset/total)
-            print("Moving to section: \(currSection), page: \(self.lastPage[currSection])")
+          // print("Moving to section: \(currSection), page: \(self.lastPage[currSection])")
         } else if (self.lastPage[currSection] != newIndex){
             self.lastPage[currSection] = Int(offset/total)
-            print("Moving to section: \(currSection), page: \(self.lastPage[currSection])")
+          //  print("Moving to section: \(currSection), page: \(self.lastPage[currSection])")
         }
         
         transitionDelegate?.completeTransition(to: IndexPath(item: self.lastPage[currSection],
